@@ -58,7 +58,7 @@ echo "Configuring time synchronization..."
 read -p "Enter the NTP servers (e.g., ntp-0.isc.tuc.gr ntp-2.isc.tuc.gr): " ntp_servers
 
 # Update timesyncd.conf with the provided NTP servers
-sudo sed -i '/^NTP=/s/.*/NTP='"$ntp_servers"'/' /etc/systemd/timesyncd.conf
+sudo sed -i 's/^#NTP=.*/NTP='"$ntp_servers"'/' /etc/systemd/timesyncd.conf
 
 # Restart the systemd timesync service
 sudo systemctl restart systemd-timesyncd.service
