@@ -1,6 +1,6 @@
 # Raspberry Pi Kiosk Mode Configuration
 
-[![Read in English](https://img.shields.io/badge/Read%20in-English-brightgreen)](README.md)
+[![Read in English](https://img.shields.io/badge/Read%20in-English-brightgreen)](README_EN.md)
 
 **Repository Structure:**
 
