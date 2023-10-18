@@ -7,6 +7,7 @@
 ├── install.sh
 └── example/
     ├── .bashrc
+    ├── refresh.sh
     ├── timesyncd.conf
     ├── update_kiosk.sh
     └── x11vnc.desktop
