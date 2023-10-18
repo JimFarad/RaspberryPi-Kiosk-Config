@@ -1,6 +1,6 @@
 # Raspberry Pi Kiosk Mode Configuration
 
-[![Read in Greek](https://img.shields.io/badge/Read%20in-Greek-blue)](README_GR.md)
+[![Read in English](https://img.shields.io/badge/Read%20in-English-brightgreen)](README.md)
 
 **Repository Structure:**
 
@@ -9,7 +9,7 @@
 ├── README.md
 ├── README_GR.md
 ├── install.sh
-└── example/
+└──/
     ├── .bashrc
     ├── refresh.sh
     ├── timesyncd.conf
@@ -25,49 +25,49 @@
 
 * * *
 
-**Disclaimer**: To ensure proper kiosk mode operation, it is recommended to disable screen blanking. To do this, follow these steps:
+**Disclaimer**: Για να διασφαλιστεί η σωστή λειτουργία της λειτουργίας περιπτέρου, συνιστάται η απενεργοποίηση του σβησίματος οθόνης. Για να το κάνετε αυτό, ακολουθήστε τα παρακάτω βήματα:
 
-1. Run the following command:
+1. Εκτελέστε την ακόλουθη εντολή:
 
    ```bash
    sudo raspi-config
    ```
 
-2. Navigate to **'2. Display Options'**
+2. Πλοηγηθείτε στο **'2. Display Options'**
 
-3. Select **'D2. Screen Blanking.'**
+3. Επιλέξτε **'D2. Screen Blanking.'**
 
-4. Choose **'No'** to disable screen blanking.
+4. Επιλέξτε **'No'** για να απενεργοποιήσετε το σβήσιμο οθόνης.
 
-5. **'Finish'** the configuration, and reboot your Raspberry Pi.
+5. **'Finish'** τη διαμόρφωση και επανεκκινήστε το Raspberry Pi.
 
-This repository provides a step-by-step guide to configure a Raspberry Pi in kiosk mode, allowing it to display a specific web page or application on startup. Kiosk mode is useful for applications like digital signage or public displays.
+Αυτό το αποθετήριο παρέχει έναν βήμα προς βήμα οδηγό για τη διαμόρφωση ενός Raspberry Pi σε λειτουργία περιπτέρου, επιτρέποντάς του να εμφανίζει μια συγκεκριμένη ιστοσελίδα ή εφαρμογή κατά την εκκίνηση. Η λειτουργία περιπτέρου είναι χρήσιμη για εφαρμογές όπως η ψηφιακή σήμανση ή οι δημόσιες οθόνες.
 
 * * *
 
-## Table of Contents
+## Πίνακας περιεχομένων
 
-1. [Initial Setup](#initial-setup)
-2. [Time Configuration](#time-configuration)
-3. [Custom Desktop Image](#custom-desktop-image)
-4. [User Creation](#user-creation)
-5. [Kiosk Configuration Script](#kiosk-configuration-script)
-6. [VNC Server Installation](#vnc-server-installation)
-7. [Creating the 'kiosk' Command](#creating-the-kiosk-command)
-8. [Reboot](#reboot)
-9. [Usage](#usage)
+1. [Αρχική ρύθμιση](#αρχική-ρύθμιση)
+2. [Ρύθμιση ώρας](#ρύθμιση-ώρας)
+3. [Προσαρμοσμένη εικόνα επιφάνειας εργασίας](#προσαρμοσμένη-εικόνα-επιφάνειας-εργασίας)
+4. [Δημιουργία χρήστη](#δημιουργία-χρήστη)
+5. [Script διαμόρφωσης περιπτέρου](#script-διαμόρφωσης-περιπτέρου)
+6. [Εγκατάσταση σύνδεσης απομακρυσμένης επιφάνειας εργασίας (Remote Desktop Connection) με το VNC](#εγκατάσταση-σύνδεσης-απομακρυσμένης-επιφάνειας-εργασίας-remote-desktop-connection-με-το-vnc)
+7. [Δημιουργία της εντολής 'kiosk'](#δημιουργία-της-εντολής-kiosk)
+8. [Επανεκκίνηση](#επανεκκίνηση)
+9. [Χρήση](#χρήση)
 
 
-## Initial Setup
+## Αρχική ρύθμιση
 
-1. Before setting up kiosk mode, ensure your Raspberry Pi is up to date:
+1. Πριν ρυθμίσετε τη λειτουργία περιπτέρου, βεβαιωθείτε ότι το Raspberry Pi σας είναι ενημερωμένο:
 
    ```bash
    sudo apt update
    sudo apt upgrade -y
    ```
 
-2. Remove unnecessary packages:
+2. Αφαιρέστε τα περιττά πακέτα:
 
    ```bash
    sudo apt purge wolfram-engine scratch scratch2 nuscratch sonic-pi idle3 -y
@@ -76,51 +76,49 @@ This repository provides a step-by-step guide to configure a Raspberry Pi in kio
    sudo apt autoremove -y
    ```
 
-3. Install the Chromium browser:
+3. Εγκαταστήστε το πρόγραμμα περιήγησης Chromium:
 
    ```bash
    sudo apt-get install chromium-browser
    ```
    
+## Ρύθμιση ώρας
 
-## Time Configuration
+Για να διαμορφώσετε το συγχρονισμό του χρόνου, ακολουθήστε τα παρακάτω βήματα:
 
-To configure time synchronization, follow these steps:
-
-1. Check your current time settings:
+1. Ελέγξτε τις τρέχουσες ρυθμίσεις ώρας:
 
    ```bash
    timedatectl status
    ```
 
-2. Edit the `timesyncd.conf` file:
+2. Επεξεργαστείτε το αρχείο `timesyncd.conf`:
 
    ```bash
    sudo nano /etc/systemd/timesyncd.conf
    ```
 
-3. Add the following NTP servers under `[Time]`:
+3. Προσθέστε τους ακόλουθους διακομιστές NTP κάτω απο το `[Time]`:
 
    ```
    NTP=ntp-0.isc.tuc.gr ntp-2.isc.tuc.gr
    ```
 
-4. Restart the systemd timesync service:
+4. Κάντε επανεκκίνηση της υπηρεσίας systemd timesync:
 
    ```bash
    sudo systemctl restart systemd-timesyncd.service
    ```
 
-5. Verify the updated time settings:
+5. Επαληθεύστε τις ενημερωμένες ρυθμίσεις ώρας:
 
    ```bash
    timedatectl status
    ```
 
+## Προσαρμοσμένη εικόνα επιφάνειας εργασίας
 
-## Custom Desktop Image
-
-To set a custom desktop image:
+Για να ορίσετε μια προσαρμοσμένη εικόνα επιφάνειας εργασίας:
 
 ```bash
 cd ~
@@ -130,9 +128,9 @@ sudo mv /usr/share/rpd-wallpaper/logo_TUC-edit.png /usr/share/rpd-wallpaper/logo
 ```
 
 
-## User Creation
+## Δημιουργία χρήστη
 
-Create a new user for the kiosk mode:
+Δημιουργήστε έναν νέο χρήστη για τη λειτουργία kiosk:
 
 ```bash
 sudo useradd -m kiosk
@@ -140,15 +138,15 @@ sudo passwd kiosk
 ```
 
 
-## Kiosk Configuration Script
+## Script διαμόρφωσης περιπτέρου
 
-1. A script to configure Chromium for kiosk mode is provided. Run the following commands:
+1. Παρέχεται ένα script για τη διαμόρφωση του Chromium για τη λειτουργία kiosk. Εκτελέστε τις ακόλουθες εντολές:
 
    ```bash
    nano ~/update_kiosk.sh
    ```
 
-2. Add the script content to `update_kiosk.sh`:
+2. Προσθέστε το περιεχόμενο της δέσμης ενεργειών στο αρχείο `update_kiosk.sh`:
 
    ```bash
    #!/bin/bash
@@ -190,27 +188,27 @@ sudo passwd kiosk
    fi
    ```
 
-3. Next, we'll grant execute permissions to the script.
+3. Στη συνέχεια, θα χορηγήσουμε δικαιώματα εκτέλεσης στο script.
 
    ```bash
    sudo chmod +x ~/update_kiosk.sh
    ```
 
-4. At times, the default mouse position might conflict with elements on a webpage. To reposition the mouse to the top left corner, you can make adjustments in the `autostart` file:
+4. Ορισμένες φορές, η προεπιλεγμένη θέση του ποντικιού μπορεί να έρχεται σε σύγκρουση με στοιχεία σε μια ιστοσελίδα. Για να επανατοποθετήσετε το ποντίκι στην επάνω αριστερή γωνία, μπορείτε να κάνετε προσαρμογές στο αρχείο `autostart`:
 
    ```bash
    sudo nano /etc/xdg/lxsession/LXDE-pi/autostart
    ```
 
-5. Add the subsequent line to the end of the file:
+5. Προσθέστε την επόμενη γραμμή στο τέλος του αρχείου:
 
    ```bash
    @xdotool mousemove 0 0
    ```
 
-The following script is designed to automatically refresh a webpage by simulating the press of the F5 button every 5 minutes (300 seconds). This periodic refresh ensures that the kiosk content remains up to date, making it ideal for displaying dynamic web-based information.
+Το ακόλουθο script έχει σχεδιαστεί για την αυτόματη ανανέωση μιας ιστοσελίδας προσομοιώνοντας το πάτημα του πλήκτρου F5 κάθε 5 λεπτά (300 δευτερόλεπτα). Αυτή η περιοδική ανανέωση εξασφαλίζει ότι το περιεχόμενο του περιπτέρου παραμένει ενημερωμένο, καθιστώντας το ιδανικό για την προβολή δυναμικών πληροφοριών που βασίζονται στον ιστό.
 
-6. The script is located at `~/.config/autostart/refresh.sh` so we have to create the `refresh.sh` file:
+6. Το script βρίσκεται στη διεύθυνση `~/.config/autostart/refresh.sh`, οπότε πρέπει να δημιουργήσουμε το αρχείο `refresh.sh`:
 
    ```bash
    sudo nano /home/kiosk/.config/autostart/refresh.sh
@@ -237,29 +235,29 @@ The following script is designed to automatically refresh a webpage by simulatin
    ```
 
 
-## VNC Server Installation
+## Εγκατάσταση σύνδεσης απομακρυσμένης επιφάνειας εργασίας (Remote Desktop Connection) με το VNC
 
-1. To install the VNC server, run the following commands:
+1. Για να εγκαταστήσετε το διακομιστή VNC, εκτελέστε τις ακόλουθες εντολές:
 
    ```bash
    sudo apt-get install x11vnc
    x11vnc -storepasswd
    ```
 
-2. Then create a VNC password for the "kiosk" user, ensuring that the VNC server is set up for their use also.
+2. Στη συνέχεια, δημιουργήστε έναν κωδικό πρόσβασης VNC για τον χρήστη "kiosk", διασφαλίζοντας ότι ο διακομιστής VNC έχει ρυθμιστεί και για τη δική του χρήση.
 
    ```bash
    sudo -u kiosk x11vnc -storepasswd
    ```
 
-3. Create an autostart configuration for x11vnc:
+3. Δημιουργήστε μια ρύθμιση αυτόματης εκκίνησης για το x11vnc:
 
    ```bash
    mkdir -p ~/.config/autostart
    nano ~/.config/autostart/x11vnc.desktop
    ```
 
-4. Add the following content:
+4. Προσθέστε το ακόλουθο περιεχόμενο:
 
    ```plaintext
    [Desktop Entry]
@@ -272,7 +270,7 @@ The following script is designed to automatically refresh a webpage by simulatin
    Hidden=false
    ```
 
-5. You have to switch to the 'kiosk' user to perform specific actions on their behalf. To do so, use the following commands:
+5. Πρέπει να μεταβείτε στον χρήστη του περιπτέρου για να εκτελέσετε συγκεκριμένες ενέργειες για λογαριασμό του. Για να το κάνετε αυτό, χρησιμοποιήστε τις ακόλουθες εντολές:
 
    ```bash
    su kiosk
@@ -283,7 +281,7 @@ The following script is designed to automatically refresh a webpage by simulatin
    nano ~/.config/autostart/x11vnc.desktop
    ```
 
-6. Add the following content:
+6. Προσθέστε το ακόλουθο περιεχόμενο:
 
    ```plaintext
    [Desktop Entry]
@@ -296,69 +294,67 @@ The following script is designed to automatically refresh a webpage by simulatin
    Hidden=false
    ```
 
-7. After completing tasks as the 'kiosk' user, you can return to the admin user with the following command:
+7. Αφού ολοκληρώσετε τις εργασίες ως χρήστης 'kiosk', μπορείτε να επιστρέψετε στον χρήστη admin με την ακόλουθη εντολή:
 
    ```bash
    exit
    ```
 
-These commands facilitate temporary user switching, allowing you to perform actions as the 'kiosk' user and then easily return to the admin user.
+Αυτές οι εντολές διευκολύνουν την προσωρινή εναλλαγή χρηστών, επιτρέποντάς σας να εκτελείτε ενέργειες ως χρήστης 'kiosk' και στη συνέχεια να επιστρέφετε εύκολα στο χρήστη admin.
 
+## Δημιουργία της εντολής 'kiosk'
 
-## Creating the 'kiosk' Command
+Για να αυξήσετε την ευκολία του χρήστη και να ενημερώσετε αποτελεσματικά την ιστοσελίδα του περιπτέρου, μπορείτε να δημιουργήσετε μια εντολή 'kiosk'. Αυτή η εντολή απλοποιεί τη διαδικασία διαμόρφωσης και εκτέλεσης του σεναρίου kiosk.
 
-To enhance user convenience and efficiently update the kiosk webpage, you can create a 'kiosk' command. This command simplifies the process of configuring and running the kiosk script.
+Ακολουθήστε τα παρακάτω βήματα για να δημιουργήσετε και να χρησιμοποιήσετε την εντολή 'kiosk':
 
-Follow these steps to create and use the 'kiosk' command:
-
-1. Edit the `.bashrc` file for the current user:
+1. Επεξεργαστείτε το αρχείο `.bashrc` για τον τρέχοντα χρήστη:
 
    ```bash
    nano ~/.bashrc
    ```
 
-2. Add an alias to streamline the execution of the kiosk script. Insert the following line into the `.bashrc` file:
+2. Προσθέστε ένα ψευδώνυμο για τον εξορθολογισμό της εκτέλεσης του σεναρίου kiosk. Εισάγετε την ακόλουθη γραμμή στο αρχείο `.bashrc`:
 
    ```plaintext
    alias kiosk='sudo /home/linuxadmin/update_kiosk.sh'
    ```
 
-**Ensure to replace 'linuxadmin' with your administrator username in the following instructions.**
+**Φροντίστε να αντικαταστήσετε το "linuxadmin" με το όνομα χρήστη του διαχειριστή σας στις ακόλουθες οδηγίες.**
 
-3. Save the changes and exit the text editor.
+3. Αποθηκεύστε τις αλλαγές και βγείτε από τον επεξεργαστή κειμένου.
 
-4. To apply the updated `.bashrc` configuration, source it using the following command:
+4. Για να εφαρμόσετε την ενημερωμένη διαμόρφωση `.bashrc`, πάρτε την πηγή χρησιμοποιώντας την ακόλουθη εντολή:
 
    ```bash
    source ~/.bashrc
    ```
 
-With the 'kiosk' command in place, you can efficiently update the kiosk webpage by simply running 'kiosk' in the terminal. This streamlines the process and simplifies kiosk mode management.
+Με την εντολή 'kiosk' στη θέση της, μπορείτε να ενημερώσετε αποτελεσματικά την ιστοσελίδα kiosk εκτελώντας απλά την εντολή 'kiosk' στο τερματικό. Αυτό βελτιώνει τη διαδικασία και απλοποιεί τη διαχείριση της λειτουργίας kiosk.
 
+## Επανεκκίνηση
 
-## Reboot
-
-You're now ready to reboot your Raspberry Pi.
+Τώρα είστε έτοιμοι να επανεκκινήσετε το Raspberry Pi.
 
 ```bash
-sudo reboot
+sudo επανεκκίνηση
 ```
 
-That's it! Your Raspberry Pi should now be configured in kiosk mode.
+Αυτό ήταν! Το Raspberry Pi σας θα πρέπει τώρα να έχει ρυθμιστεί σε λειτουργία περιπτέρου.
 
 
-## Usage
+## Χρήση
 
-To configure your Raspberry Pi in kiosk mode, follow these steps:
+Για να ρυθμίσετε το Raspberry Pi σας σε λειτουργία περιπτέρου, ακολουθήστε τα παρακάτω βήματα:
 
-1. Open a terminal window on your Raspberry Pi.
+1. Ανοίξτε ένα παράθυρο τερματικού στο Raspberry Pi σας.
 
-2. Run the following command to start the configuration process:
+2. Εκτελέστε την ακόλουθη εντολή για να ξεκινήσει η διαδικασία διαμόρφωσης:
 
    ```bash
    kiosk
    ```
 
-3. The script will guide you through the setup process. Follow the on-screen instructions to complete the configuration.
+3. Το script θα σας καθοδηγήσει στη διαδικασία ρύθμισης. Ακολουθήστε τις οδηγίες που εμφανίζονται στην οθόνη για να ολοκληρώσετε τη διαμόρφωση.
 
-4. Once the configuration is done, you will be prompted to reboot your Raspberry Pi. Type "yes" to reboot immediately.
+4. Μόλις ολοκληρωθεί η διαμόρφωση, θα σας ζητηθεί να επανεκκινήσετε το Raspberry Pi. Πληκτρολογήστε "yes" για να κάνετε αμέσως επανεκκίνηση.
