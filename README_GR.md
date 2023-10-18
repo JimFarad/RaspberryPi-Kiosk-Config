@@ -24,6 +24,7 @@
 6. [Σενάριο Κιόσκι](#σενάριο-κιόσκι)
 7. [Πρόσθετες Προσαρμογές](#πρόσθετες-προσαρμογές)
 8. [Επανεκκίνηση](#επανεκκίνηση)
+9. [Χρήση](#χρήση)
 
 ## Αρχική Ρύθμιση
 
@@ -146,7 +147,45 @@ nano update_kiosk.sh
 Προσθέστε το περιεχόμενο του σεναρίου στο `update_kiosk.sh`:
 
 ```bash
-# Εισάγετε το περιεχόμενο του σεναρίου εδώ
+#!/bin/bash
+
+#
+# Note: This script is used to configure Chromium for kiosk mode.
+# It deletes the existing @chromium-browser --kiosk line from
+# /etc/xdg/lxsession/LXDE-pi/autostart, inserts the provided website URL,
+# and prompts the user for a reboot.
+#
+# Usage: Type 'kiosk' in the terminal to run this script.
+#
+# --- METADATA: ---
+# Author : Farantouris Dimitris (gfarantouris)
+#
+# Date: October 2023
+#
+
+
+# Check if the script is being run with sudo
+if [ "$EUID" -ne 0 ]; then
+  echo "Please run this script with sudo."
+  exit 1
+fi
+
+# Ask the user for the website URL
+read -p "Enter the URL for Chromium kiosk mode: " website
+
+# Update the autostart file
+sed -i '/@chromium-browser --kiosk/d' /etc/xdg/lxsession/LXDE-pi/autostart
+echo "@chromium-browser --kiosk $website" >> /etc/xdg/lxsession/LXDE-pi/autostart
+
+# Notify the user to reboot
+echo "Changes have been made to the autostart file."
+read -p "You should reboot now. Type 'yes' to reboot or 'no' to skip: " choice
+
+if [ "$choice" = "yes" ]; then
+  sudo reboot
+else
+  echo "You can manually reboot later."
+fi
 ```
 
 Επεξεργαστείτε το αρχείο `~/.bashrc`:
@@ -158,7 +197,6 @@ nano ~/.bashrc
 Προσθέστε ένα ψευδώνυμο για την εκτέλεση του σεναρίου κιόσκι:
 
 ```plaintext
-# Ψευδώνυμος για τη ρύθμιση και εκτέλεση της λειτουργίας κιόσκι του Chromium
 alias kiosk='sudo /home/linuxadmin/update_kiosk.sh'
 ```
 
