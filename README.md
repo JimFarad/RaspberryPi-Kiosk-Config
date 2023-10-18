@@ -13,6 +13,8 @@
     └── x11vnc.desktop
 ```
 
+* * *
+
 # Raspberry Pi Kiosk Mode Configuration
 
 **Hardware Used**: *Raspberry Pi Model X (e.g., Raspberry Pi 4)*
