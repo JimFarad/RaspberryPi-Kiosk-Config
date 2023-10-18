@@ -64,12 +64,6 @@ sudo sed -i 's/^#NTP=.*/NTP='"$ntp_servers"'/' /etc/systemd/timesyncd.conf
 sudo systemctl restart systemd-timesyncd.service
 echo "Time synchronization configured."
 
-# Install VNC server
-echo "Installing VNC server..."
-sudo apt-get install x11vnc -y
-x11vnc -storepasswd
-echo "VNC server installed."
-
 # Set a custom desktop image
 echo "Setting a custom desktop image..."
 cd ~
@@ -142,6 +136,26 @@ while true; do
     sleep 300
 done
 EOF
+
+# Install VNC server
+echo "Installing VNC server..."
+sudo apt-get install x11vnc -y
+echo "Set up code for user $SUDO_USER"
+sudo -u $SUDO_USER x11vnc -storepasswd
+echo "Set up code for user kiosk."
+sudo -u kiosk x11vnc -storepasswd
+
+cat <<EOF > /home/kiosk/autostart/x11vnc.desktop
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Name=X11VNC
+Exec=x11vnc -forever -usepw -display :0 -ultrafilexfer
+StartupNotify=false
+Terminal=false
+Hidden=false
+EOF
+echo "VNC server installed."
 
 # Make the script executable
 sudo chmod +x /home/$SUDO_USER/update_kiosk.sh
