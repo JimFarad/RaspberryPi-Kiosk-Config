@@ -109,7 +109,7 @@ read -p "Enter the URL for kiosk mode: " website
 
 # Update the autostart file
 sudo sed -i '/@chromium-browser --kiosk/d' /etc/xdg/lxsession/LXDE-pi/autostart
-echo "@chromium-browser --kiosk --kiosk-printing \$website" >> /etc/xdg/lxsession/LXDE-pi/autostart
+echo "@chromium-browser --kiosk \$website" >> /etc/xdg/lxsession/LXDE-pi/autostart
 
 # Notify the user to reboot
 echo "Changes have been made to the autostart file."
@@ -121,6 +121,8 @@ else
   echo "You can manually reboot later."
 fi
 EOF
+
+echo "@xdotool mousemove 0 0" | sudo tee -a /etc/xdg/lxsession/LXDE-pi/autostart
 
 # Create the kiosk configuration script
 echo "Creating the kiosk configuration script..."
