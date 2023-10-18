@@ -168,10 +168,26 @@ source ~/.bashrc
 
 ## Reboot
 
-You're now ready to reboot your Raspberry Pi. Before that, you can display a message to the user if desired.
+You're now ready to reboot your Raspberry Pi.
 
 ```bash
 sudo reboot
 ```
 
 That's it! Your Raspberry Pi should now be configured in kiosk mode.
+
+## Usage
+
+To configure your Raspberry Pi in kiosk mode, follow these steps:
+
+1. Open a terminal window on your Raspberry Pi.
+
+2. Run the following command to start the configuration process:
+
+```bash
+kiosk
+```
+
+3. The script will guide you through the setup process. Follow the on-screen instructions to complete the configuration.
+
+4. Once the configuration is done, you will be prompted to reboot your Raspberry Pi. Type "yes" to reboot immediately.
