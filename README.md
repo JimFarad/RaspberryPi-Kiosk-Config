@@ -37,7 +37,7 @@
 
 4. Choose **'No'** to disable screen blanking.
 
-5. **Finish** the configuration, and reboot your Raspberry Pi.
+5. **'Finish'** the configuration, and reboot your Raspberry Pi.
 
 This repository provides a step-by-step guide to configure a Raspberry Pi in kiosk mode, allowing it to display a specific web page or application on startup. Kiosk mode is useful for applications like digital signage or public displays.
 
