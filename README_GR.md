@@ -1,5 +1,7 @@
 # Διαμόρφωση λειτουργίας Raspberry Pi Kiosk
 
+[![Read in English](https://img.shields.io/badge/Read%20in-English-brightgreen)](README.md)
+
 **Δομή αποθετηρίου:**
 
 ```
