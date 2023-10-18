@@ -1,5 +1,7 @@
 # Raspberry Pi Kiosk Mode Configuration
 
+[![Read in Greek](https://img.shields.io/badge/Read%20in-Greek-blue)](README_GR.md)
+
 **Repository Structure:**
 
 ```
