@@ -118,10 +118,10 @@ EOF
 
 echo "@xdotool mousemove 0 0" | sudo tee -a /etc/xdg/lxsession/LXDE-pi/autostart
 
-# Create the kiosk configuration script
-echo "Creating the kiosk configuration script..."
-mkdir /home/kiosk/autostart/
-cat <<EOF > /home/kiosk/autostart/refrash.sh
+# Create an autostart configuration for x11vnc
+echo "Creating an autostart configuration for x11vnc..."
+mkdir /home/kiosk/.config/autostart/
+cat <<EOF > /home/kiosk/.config/autostart/refresh.sh
 #!/bin/bash
 
 # Kiosk Refresh Script
@@ -145,7 +145,7 @@ sudo -u $SUDO_USER x11vnc -storepasswd
 echo "Set up code for user kiosk."
 sudo -u kiosk x11vnc -storepasswd
 
-cat <<EOF > /home/kiosk/autostart/x11vnc.desktop
+cat <<EOF > /home/kiosk/.config/autostart/x11vnc.desktop
 [Desktop Entry]
 Encoding=UTF-8
 Type=Application
