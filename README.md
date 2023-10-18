@@ -175,8 +175,3 @@ sudo reboot
 ```
 
 That's it! Your Raspberry Pi should now be configured in kiosk mode.
-
-Feel free to customize the README file further, provide additional explanations, and add any troubleshooting information if needed.
-```
-
-You can create a `.gitignore` file to specify which files or directories should be excluded from version control in your Git repository.
