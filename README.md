@@ -1,3 +1,18 @@
+**Repository Structure:**
+
+```
+/
+├── README.md
+├── README_GR.md
+├── install.sh
+└── example/
+    ├── .bashrc
+    ├── refresh.sh
+    ├── timesyncd.conf
+    ├── update_kiosk.sh
+    └── x11vnc.desktop
+```
+
 # Raspberry Pi Kiosk Mode Configuration
 
 **Hardware Used**: *Raspberry Pi Model X (e.g., Raspberry Pi 4)*
