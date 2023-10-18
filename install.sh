@@ -12,11 +12,21 @@
 # Date: October 2023
 #
 
+# Disclaimer
+echo "Disclaimer: To ensure proper kiosk mode operation, it is recommended to disable screen blanking. To do this, please follow these steps:"
+echo "1. Exit this script."
+echo "2. Run the following command:"
+echo "   sudo raspi-config"
+echo "3. Navigate to '2. Display Options'."
+echo "4. Select 'D2. Screen Blanking' and choose 'No.'"
+echo "5. Finish the configuration and reboot your Raspberry Pi."
+read -p "Once screen blanking is disabled, restart this script and press Enter to continue."
+
 # Check if the script is being run with sudo
 if [ "$EUID" -ne 0 ]; then
   echo "Please run this script with sudo."
   exit 1
-fi
+}
 
 # Welcome message
 echo "Welcome to the Raspberry Pi Kiosk Mode Configuration Script"
