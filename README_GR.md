@@ -3,11 +3,13 @@
 ```
 /
 ├── README.md
-├── update_kiosk.sh
-├── .gitignore
-└── .config/
-    └── autostart/
-        └── x11vnc.desktop
+├── README_GR.md
+├── install.sh
+└── example/
+    ├── .bashrc
+    ├── timesyncd.conf
+    ├── update_kiosk.sh
+    └── x11vnc.desktop
 ```
 
 # Ρύθμιση Λειτουργίας Κιόσκι Raspberry Pi
