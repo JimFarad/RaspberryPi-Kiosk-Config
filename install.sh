@@ -26,7 +26,7 @@ read -p "Once screen blanking is disabled, restart this script and press Enter t
 if [ "$EUID" -ne 0 ]; then
   echo "Please run this script with sudo."
   exit 1
-}
+fi
 
 # Welcome message
 echo "Welcome to the Raspberry Pi Kiosk Mode Configuration Script"
