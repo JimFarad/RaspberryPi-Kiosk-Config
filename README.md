@@ -10,9 +10,6 @@
         └── x11vnc.desktop
 ```
 
-**README.md:**
-
-```markdown
 # Raspberry Pi Kiosk Mode Configuration
 
 This repository provides a step-by-step guide to configure a Raspberry Pi in kiosk mode, allowing it to display a specific web page or application on startup. Kiosk mode is useful for applications like digital signage or public displays.
