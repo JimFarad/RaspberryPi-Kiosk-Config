@@ -109,7 +109,7 @@ read -p "Enter the URL for kiosk mode: " website
 
 # Update the autostart file
 sudo sed -i '/@chromium-browser --kiosk/d' /etc/xdg/lxsession/LXDE-pi/autostart
-echo "@chromium-browser --kiosk \$website" >> /etc/xdg/lxsession/LXDE-pi/autostart
+echo "@chromium-browser --kiosk --kiosk-printing \$website" >> /etc/xdg/lxsession/LXDE-pi/autostart
 
 # Notify the user to reboot
 echo "Changes have been made to the autostart file."
@@ -123,7 +123,8 @@ fi
 EOF
 
 # Make the script executable
-chmod +x /home/$SUDO_USER/update_kiosk.sh
+sudo chmod +x /home/$SUDO_USER/update_kiosk.sh
+sudo chown linuxadmin:linuxadmin update_kiosk.sh
 
 # Add an alias to .bashrc
 echo "Adding an alias to .bashrc..."
