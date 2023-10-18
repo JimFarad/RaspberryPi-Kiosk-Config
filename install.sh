@@ -122,9 +122,29 @@ else
 fi
 EOF
 
+# Create the kiosk configuration script
+echo "Creating the kiosk configuration script..."
+mkdir /home/kiosk/autostart/
+cat <<EOF > /home/kiosk/autostart/refrash.sh
+#!/bin/bash
+
+# Kiosk Refresh Script
+# Author: Farantouris Dimitris (gfarantouris)
+# Date: October 2023
+
+while true; do
+    # Simulate pressing the F5 key to refresh the page
+    xdotool key F5
+
+    # Sleep for 5 minutes (300 seconds)
+    sleep 300
+done
+EOF
+
 # Make the script executable
 sudo chmod +x /home/$SUDO_USER/update_kiosk.sh
 sudo chown linuxadmin:linuxadmin update_kiosk.sh
+chown -R kiosk /home/kiosk/autostart/
 
 # Add an alias to .bashrc
 echo "Adding an alias to .bashrc..."
