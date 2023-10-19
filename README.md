@@ -76,10 +76,10 @@
    sudo apt autoremove -y
    ```
 
-3. Εγκαταστήστε το πρόγραμμα περιήγησης Chromium:
+3. Εγκαταστήστε το πρόγραμμα περιήγησης Chromium και λοιπά:
 
    ```bash
-   sudo apt-get install chromium-browser
+   sudo apt-get install chromium-browser xdotool screen -y
    ```
    
 ## Ρύθμιση ώρας
@@ -133,7 +133,7 @@ sudo mv /usr/share/rpd-wallpaper/logo_TUC-edit.png /usr/share/rpd-wallpaper/logo
 Δημιουργήστε έναν νέο χρήστη για τη λειτουργία kiosk:
 
 ```bash
-sudo useradd -m kiosk
+sudo adduser kiosk
 sudo passwd kiosk
 ```
 
@@ -211,7 +211,12 @@ sudo passwd kiosk
 6. Το script βρίσκεται στη διεύθυνση `~/.config/autostart/refresh.sh`, οπότε πρέπει να δημιουργήσουμε το αρχείο `refresh.sh`:
 
    ```bash
-   sudo nano /home/kiosk/.config/autostart/refresh.sh
+   sudo -u kiosk mkdir /home/kiosk/.config/
+   sudo -u kiosk mkdir /home/kiosk/.config/autostart/
+   ```
+
+   ```bash
+   sudo -u kiosk nano /home/kiosk/.config/autostart/refresh.sh
    ```
 
    ```bash
@@ -229,10 +234,6 @@ sudo passwd kiosk
        sleep 300
    done
    ```
-   
-   ```bash
-   sudo chown kiosk:kiosk /home/kiosk/.config/autostart/refresh.sh
-   ```
 
 
 ## Εγκατάσταση σύνδεσης απομακρυσμένης επιφάνειας εργασίας (Remote Desktop Connection) με το VNC
@@ -240,7 +241,7 @@ sudo passwd kiosk
 1. Για να εγκαταστήσετε το διακομιστή VNC, εκτελέστε τις ακόλουθες εντολές:
 
    ```bash
-   sudo apt-get install x11vnc
+   sudo apt-get install x11vnc -y
    x11vnc -storepasswd
    ```
 
