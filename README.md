@@ -2,6 +2,17 @@
 
 [![Read in English](https://img.shields.io/badge/Read%20in-English-brightgreen)](README_EN.md)
 
+```
+tmp
+
+cronjob every one minute
+
+disable autostart
+
+
+```
+
+
 **Repository Structure:**
 
 ```
